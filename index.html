@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#10233f">
+<meta name="description" content="Flag Quest — demo gratis tebak bendera dunia dan permainan lengkap untuk anggota Play & Learn.">
 <title>Flag Quest V3 — World Flags Challenge</title>
 <style>
 :root{--navy:#10233f;--blue:#2563eb;--ink:#17243a;--muted:#718096;--bg:#f3f6fb;--green:#15966b;--red:#dc4c4c;--gold:#e8a323}
@@ -25,12 +26,37 @@ button{font:inherit;cursor:pointer;border:0;transition:.15s}.primary,.secondary{
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.back{background:transparent;color:var(--blue);font-weight:800;padding:5px 0}.pill{background:#edf3ff;color:#315d9c;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:850}
 .hidden{display:none!important}.note{font-size:11px;color:var(--muted);text-align:center;margin:14px 0 0;line-height:1.5}footer{text-align:center;color:#8290a3;font-size:12px;padding:0 15px 25px}
 @media(max-width:380px){.panel{padding:14px}.option{font-size:13px}.flagbox{height:185px}.stat strong{font-size:19px}}
-</style>
+
+.accessbox{margin:0 0 14px;padding:13px;border-radius:15px;background:#eef5ff;border:1px solid #d8e6fb}
+.accessbox strong{display:block;color:#173d70;margin-bottom:4px}
+.accessbox p{font-size:12px;line-height:1.5;color:#52647d;margin:4px 0}
+.accessrow{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.accessrow input{flex:1;min-width:120px;padding:10px}
+.accessrow button{padding:10px 13px;border-radius:10px;font-weight:800}
+.accessmsg{font-size:12px;font-weight:700;margin-top:8px;color:#315d9c}
+.premiumcta{margin-top:16px;padding:16px;border-radius:16px;background:linear-gradient(135deg,#10233f,#1d4b79);color:white;text-align:center}
+.premiumcta p{font-size:13px;line-height:1.5;color:#dbeafe}
+.premiumcta a{display:inline-block;background:#fbbf24;color:#17243a;text-decoration:none;padding:12px 16px;border-radius:11px;font-weight:900;margin-top:5px}
+.demo-tag{display:inline-block;background:#fff4d6;color:#855600;border-radius:99px;padding:5px 9px;font-size:10px;font-weight:900;margin-bottom:8px}
+
 </head>
 <body>
 <header><div class="brand">🌍 WORLD FLAGS CHALLENGE · V3</div><h1>Flag Quest</h1><p>Learn the flags. Discover the world.</p></header>
 <main><section class="panel">
 <div id="home">
+<div class="accessbox" id="accessBox">
+  <strong id="accessTitle">🎁 Free Demo · 5 Questions</strong>
+  <p id="accessDescription">Coba Flag Quest gratis. Anggota Play & Learn yang sudah berlangganan dapat memainkan versi lengkap.</p>
+  <div class="accessrow" id="loginRow">
+    <input id="memberEmail" type="email" autocomplete="email" placeholder="Email akun Play & Learn" aria-label="Email akun Play & Learn">
+    <input id="memberPassword" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password akun Play & Learn">
+    <button class="primary" id="memberLogin" type="button">Login Premium</button>
+  </div>
+  <div class="accessrow" id="logoutRow" style="display:none">
+    <button class="secondary" id="memberLogout" type="button">Logout</button>
+  </div>
+  <div class="accessmsg" id="accessMessage" aria-live="polite">Belum login? Demo gratis tetap bisa dimainkan.</div>
+</div>
 <h2>Ready to explore the world?</h2><p class="sub">Choose your challenge and see how many flags you can recognize.</p>
 <label class="fieldlabel" for="level">Choose your level</label>
 <select id="level">
@@ -53,7 +79,7 @@ button{font:inherit;cursor:pointer;border:0;transition:.15s}.primary,.secondary{
 <button class="modebtn" id="leaderboardBtn">🏆 Leaderboard<span>Best scores on this device</span></button>
 <button class="modebtn" id="howBtn">💡 How to play<span>Quick game guide</span></button>
 </div>
-<p class="note">Your scores are saved locally in this browser. No account needed.</p>
+<p class="note" id="homeNote">Free demo: 5 soal per sesi. Login dengan akun berlangganan untuk memainkan 10 soal per sesi.</p>
 </div>
 <div id="game" class="hidden">
 <div class="stats"><div class="stat"><small>Score</small><strong id="score">0</strong></div><div class="stat"><small>Question</small><strong id="count">1/10</strong></div><div class="stat"><small>Best</small><strong id="best">0</strong></div></div>
@@ -71,6 +97,7 @@ button{font:inherit;cursor:pointer;border:0;transition:.15s}.primary,.secondary{
 <div class="stats"><div class="stat"><small>Your score</small><strong id="finalScore">0</strong></div><div class="stat"><small>Correct</small><strong id="correctCount">0</strong></div><div class="stat"><small>Accuracy</small><strong id="accuracy">0%</strong></div></div>
 <p id="resultMessage" style="text-align:center;font-weight:800"></p>
 <p id="playerResults" style="text-align:center;font-size:14px;line-height:1.7"></p>
+<div id="premiumOffer" class="premiumcta hidden"><span class="demo-tag">DEMO SELESAI</span><h2 style="color:white;margin:5px 0">Seru, kan belajar sambil bermain?</h2><p>Buka pengalaman Flag Quest lengkap dan seluruh permainan Play & Learn dengan keanggotaan aktif.</p><a href="https://lynk.id/belajarsekeluarga/rl86rrj97zdg/checkout" target="_blank" rel="noopener">Pilih Family Monthly · Rp19.900</a><p style="font-size:11px">Gunakan email yang sama dengan akun Play & Learn.</p></div>
 <label class="fieldlabel" for="playerName">Save your score — enter a name</label><input id="playerName" maxlength="18" placeholder="Your name">
 <button class="primary wide" id="saveScore">Save to Leaderboard</button><button class="secondary wide" id="playAgain">Play Again</button><button class="back wide" id="resultsHome">Back to Menu</button>
 </div>
@@ -82,7 +109,12 @@ button{font:inherit;cursor:pointer;border:0;transition:.15s}.primary,.secondary{
 <div class="topbar"><button class="back" id="howBack">← Menu</button></div><h2>How to play</h2><ol class="list"><li>Choose a region or Expert mode.</li><li>Look at the flag and select one of four country names.</li><li>Correct answer = 1 point.</li><li>In Challenge mode, answer before the 10-second timer ends.</li><li>Finish the round, save your name, and try to beat your best score.</li></ol><p class="note">Each round has 10 questions. Questions are shuffled every time you play.</p>
 </div>
 </section></main><footer>Flag Quest V3 · Learn flags, capitals and continents.<br><strong style="display:inline-block;margin-top:6px;color:#52647d">feribatahan@gmail.com</strong></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL="https://ohvbnfttaoswktejvubg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_8OCqf5wAmyczYMChUNopjg_XokfM31d";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+let premiumMember=false, currentMember=null, gameLimit=5;
 const countries=[["Afghanistan", "af"], ["Albania", "al"], ["Algeria", "dz"], ["Andorra", "ad"], ["Angola", "ao"], ["Antigua and Barbuda", "ag"], ["Argentina", "ar"], ["Armenia", "am"], ["Australia", "au"], ["Austria", "at"], ["Azerbaijan", "az"], ["Bahamas", "bs"], ["Bahrain", "bh"], ["Bangladesh", "bd"], ["Barbados", "bb"], ["Belarus", "by"], ["Belgium", "be"], ["Belize", "bz"], ["Benin", "bj"], ["Bhutan", "bt"], ["Bolivia", "bo"], ["Bosnia and Herzegovina", "ba"], ["Botswana", "bw"], ["Brazil", "br"], ["Brunei", "bn"], ["Bulgaria", "bg"], ["Burkina Faso", "bf"], ["Burundi", "bi"], ["Cabo Verde", "cv"], ["Cambodia", "kh"], ["Cameroon", "cm"], ["Canada", "ca"], ["Central African Republic", "cf"], ["Chad", "td"], ["Chile", "cl"], ["China", "cn"], ["Colombia", "co"], ["Comoros", "km"], ["Congo", "cg"], ["Costa Rica", "cr"], ["Croatia", "hr"], ["Cuba", "cu"], ["Cyprus", "cy"], ["Czechia", "cz"], ["Democratic Republic of the Congo", "cd"], ["Denmark", "dk"], ["Djibouti", "dj"], ["Dominica", "dm"], ["Dominican Republic", "do"], ["Ecuador", "ec"], ["Egypt", "eg"], ["El Salvador", "sv"], ["Equatorial Guinea", "gq"], ["Eritrea", "er"], ["Estonia", "ee"], ["Eswatini", "sz"], ["Ethiopia", "et"], ["Fiji", "fj"], ["Finland", "fi"], ["France", "fr"], ["Gabon", "ga"], ["Gambia", "gm"], ["Georgia", "ge"], ["Germany", "de"], ["Ghana", "gh"], ["Greece", "gr"], ["Grenada", "gd"], ["Guatemala", "gt"], ["Guinea", "gn"], ["Guinea-Bissau", "gw"], ["Guyana", "gy"], ["Haiti", "ht"], ["Honduras", "hn"], ["Hungary", "hu"], ["Iceland", "is"], ["India", "in"], ["Indonesia", "id"], ["Iran", "ir"], ["Iraq", "iq"], ["Ireland", "ie"], ["Israel", "il"], ["Italy", "it"], ["Ivory Coast", "ci"], ["Jamaica", "jm"], ["Japan", "jp"], ["Jordan", "jo"], ["Kazakhstan", "kz"], ["Kenya", "ke"], ["Kiribati", "ki"], ["Kosovo", "xk"], ["Kuwait", "kw"], ["Kyrgyzstan", "kg"], ["Laos", "la"], ["Latvia", "lv"], ["Lebanon", "lb"], ["Lesotho", "ls"], ["Liberia", "lr"], ["Libya", "ly"], ["Liechtenstein", "li"], ["Lithuania", "lt"], ["Luxembourg", "lu"], ["Madagascar", "mg"], ["Malawi", "mw"], ["Malaysia", "my"], ["Maldives", "mv"], ["Mali", "ml"], ["Malta", "mt"], ["Marshall Islands", "mh"], ["Mauritania", "mr"], ["Mauritius", "mu"], ["Mexico", "mx"], ["Micronesia", "fm"], ["Moldova", "md"], ["Monaco", "mc"], ["Mongolia", "mn"], ["Montenegro", "me"], ["Morocco", "ma"], ["Mozambique", "mz"], ["Myanmar", "mm"], ["Namibia", "na"], ["Nauru", "nr"], ["Nepal", "np"], ["Netherlands", "nl"], ["New Zealand", "nz"], ["Nicaragua", "ni"], ["Niger", "ne"], ["Nigeria", "ng"], ["North Korea", "kp"], ["North Macedonia", "mk"], ["Norway", "no"], ["Oman", "om"], ["Pakistan", "pk"], ["Palau", "pw"], ["Palestine", "ps"], ["Panama", "pa"], ["Papua New Guinea", "pg"], ["Paraguay", "py"], ["Peru", "pe"], ["Philippines", "ph"], ["Poland", "pl"], ["Portugal", "pt"], ["Qatar", "qa"], ["Romania", "ro"], ["Russia", "ru"], ["Rwanda", "rw"], ["Saint Kitts and Nevis", "kn"], ["Saint Lucia", "lc"], ["Saint Vincent and the Grenadines", "vc"], ["Samoa", "ws"], ["San Marino", "sm"], ["Sao Tome and Principe", "st"], ["Saudi Arabia", "sa"], ["Senegal", "sn"], ["Serbia", "rs"], ["Seychelles", "sc"], ["Sierra Leone", "sl"], ["Singapore", "sg"], ["Slovakia", "sk"], ["Slovenia", "si"], ["Solomon Islands", "sb"], ["Somalia", "so"], ["South Africa", "za"], ["South Korea", "kr"], ["South Sudan", "ss"], ["Spain", "es"], ["Sri Lanka", "lk"], ["Sudan", "sd"], ["Suriname", "sr"], ["Sweden", "se"], ["Switzerland", "ch"], ["Syria", "sy"], ["Tajikistan", "tj"], ["Tanzania", "tz"], ["Thailand", "th"], ["Timor-Leste", "tl"], ["Togo", "tg"], ["Tonga", "to"], ["Trinidad and Tobago", "tt"], ["Tunisia", "tn"], ["Turkey", "tr"], ["Turkmenistan", "tm"], ["Tuvalu", "tv"], ["Uganda", "ug"], ["Ukraine", "ua"], ["United Arab Emirates", "ae"], ["United Kingdom", "gb"], ["United States", "us"], ["Uruguay", "uy"], ["Uzbekistan", "uz"], ["Vanuatu", "vu"], ["Vatican City", "va"], ["Venezuela", "ve"], ["Vietnam", "vn"], ["Yemen", "ye"], ["Zambia", "zm"], ["Zimbabwe", "zw"]];
 const el=id=>document.getElementById(id);
 const groups={
@@ -137,17 +169,18 @@ function clearTimer(){if(timer){clearInterval(timer);timer=null}}
 function getPool(){if(levelKey==='world')return countries;const n=new Set(groups[levelKey]);return countries.filter(c=>n.has(c[0]))}
 function startGame(){
  clearTimer();levelKey=el('level').value;roundMode=el('difficulty').value;
- deck=shuffle(getPool()).slice(0,10);index=0;score=0;answers={};saved=false;playerCount=Number(el('players').value);playerNames=playerCount===2?[(prompt('Name for Player 1','Player 1')||'Player 1').trim(),(prompt('Name for Player 2','Player 2')||'Player 2').trim()]:['Player 1','Player 2'];playerScores=[0,0];turn=0;
- el('best').textContent=best();el('levelTag').textContent=names[levelKey];show('game');render();
+ gameLimit=premiumMember?10:5;
+ deck=shuffle(getPool()).slice(0,gameLimit);index=0;score=0;answers={};saved=false;playerCount=Number(el('players').value);playerNames=playerCount===2?[(prompt('Name for Player 1','Player 1')||'Player 1').trim(),(prompt('Name for Player 2','Player 2')||'Player 2').trim()]:['Player 1','Player 2'];playerScores=[0,0];turn=0;
+ el('best').textContent=best();el('levelTag').textContent=(premiumMember?'FULL · ':'DEMO · ')+names[levelKey];show('game');render();
 }
 function render(){
- clearTimer();const target=deck[index];el('score').textContent=score;el('count').textContent=(index+1)+'/10';
+ clearTimer();const target=deck[index];el('score').textContent=score;el('count').textContent=(index+1)+'/'+gameLimit;
  el('flagbox').innerHTML='<div class="flag" role="img" aria-label="Flag">'+flag(target[1])+'</div>';
  const opts=shuffle([target,...shuffle(countries.filter(c=>c[0]!==target[0])).slice(0,3)]);
  el('options').innerHTML='';
  opts.forEach((c,i)=>{const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+c[0];b.onclick=()=>answer(c[0]);el('options').appendChild(b)});
  el('feedback').textContent=playerCount===2?'Turn: '+playerNames[turn]+' — choose the correct country.':'Choose the correct country.';el('feedback').className='feedback';el('factPanel').classList.add('hidden');
- el('prev').disabled=index===0;el('next').disabled=true;el('next').textContent=index===9?'See Results →':'Next →';
+ el('prev').disabled=index===0;el('next').disabled=true;el('next').textContent=index===gameLimit-1?'See Results →':'Next →';
  el('timerText').textContent=playerCount===2?'Turn: '+playerNames[turn]:'Take your time';
  if(roundMode==='timed'){seconds=10;el('timerLine').classList.remove('hidden');updateTimer();timer=setInterval(()=>{seconds--;updateTimer();if(seconds<=0){clearTimer();answer(null,true)}},1000)}
  else{el('timerLine').classList.add('hidden');el('timerText').textContent='Take your time'}
@@ -162,11 +195,50 @@ function answer(choice,timeout=false){
  el('feedback').className='feedback '+(ok?'good':'bad');el('score').textContent=score;el('next').disabled=false;
 }
 function restore(){const a=answers[index];showFact(a.correct);[...el('options').children].forEach(b=>{b.disabled=true;const n=b.textContent.slice(3);if(n===a.correct)b.classList.add('correct');else if(n===a.choice)b.classList.add('wrong')});el('feedback').textContent=a.ok?'✓ Correct! +1 point':'✕ Answer: '+a.correct;el('feedback').className='feedback '+(a.ok?'good':'bad');el('next').disabled=false}
-function finish(){clearTimer();const total=Object.values(answers).filter(a=>a.ok).length;el('finalScore').textContent=score+'/10';el('correctCount').textContent=total;el('accuracy').textContent=Math.round(total/10*100)+'%';el('resultMessage').textContent=playerCount===2?(playerScores[0]===playerScores[1]?'It’s a tie! 🤝':playerNames[playerScores[0]>playerScores[1]?0:1]+' wins! 🏆'):(score===10?'Perfect score! Amazing! 🌟':score>=7?'Great work! Keep it up! 👏':score>=4?'Nice effort. A little more practice!':'Good start — every round helps you learn!');el('playerResults').textContent=playerCount===2?playerNames[0]+': '+playerScores[0]+' points · '+playerNames[1]+': '+playerScores[1]+' points':'';el('playerName').value=playerCount===1?'Player 1':'';show('results')}
+function finish(){clearTimer();const total=Object.values(answers).filter(a=>a.ok).length;el('finalScore').textContent=score+'/'+gameLimit;el('correctCount').textContent=total;el('accuracy').textContent=Math.round(total/gameLimit*100)+'%';el('resultMessage').textContent=playerCount===2?(playerScores[0]===playerScores[1]?'It’s a tie! 🤝':playerNames[playerScores[0]>playerScores[1]?0:1]+' wins! 🏆'):(score===10?'Perfect score! Amazing! 🌟':score>=7?'Great work! Keep it up! 👏':score>=4?'Nice effort. A little more practice!':'Good start — every round helps you learn!');el('playerResults').textContent=playerCount===2?playerNames[0]+': '+playerScores[0]+' points · '+playerNames[1]+': '+playerScores[1]+' points':'';el('playerName').value=playerCount===1?'Player 1':'';el('premiumOffer').classList.toggle('hidden',premiumMember);show('results')}
 function board(){let a=[];try{a=JSON.parse(localStorage.getItem(boardKey)||'[]')}catch(e){}return a}
 function renderBoard(){const rows=board().sort((a,b)=>b.score-a.score||b.date-a.date).slice(0,10);el('leaderList').innerHTML=rows.length?rows.map((r,i)=>'<div class="leaderrow"><span class="rank">#'+(i+1)+'</span><span class="leadername">'+escapeHtml(r.name)+'<br><small style="color:#8794a7;font-weight:500">'+escapeHtml(r.level)+' · '+new Date(r.date).toLocaleDateString()+'</small></span><span class="leaderpts">'+r.score+'/10</span></div>').join(''):'<p class="sub">No scores yet. Finish a game to appear here!</p>'}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-el('start').onclick=startGame;el('next').onclick=()=>{if(index<9){if(playerCount===2)turn=1-turn;index++;render()}else finish()};el('prev').onclick=()=>{if(index>0){index--;turn=answers[index]?.player??turn;render()}};
+
+async function updateAccess(user){
+ currentMember=user||null;
+ premiumMember=false;
+ if(user){
+   const {data:subs,error}=await sb.from('subscriptions')
+     .select('id,status,end_date')
+     .eq('user_id',user.id)
+     .eq('status','active')
+     .gt('end_date',new Date().toISOString())
+     .order('end_date',{ascending:false})
+     .limit(1);
+   if(!error && subs && subs.length) premiumMember=true;
+   else if(error) console.warn('Membership check failed:',error.message);
+ }
+ el('accessTitle').textContent=premiumMember?'⭐ Premium Member · Full Game':'🎁 Free Demo · 5 Questions';
+ el('accessDescription').textContent=premiumMember
+   ? 'Keanggotaan aktif terdeteksi. Anda dapat memainkan 10 soal per sesi.'
+   : 'Coba Flag Quest gratis dengan 5 soal per sesi. Login dengan akun berlangganan untuk membuka versi lengkap.';
+ el('loginRow').style.display=user?'none':'flex';
+ el('logoutRow').style.display=user?'flex':'none';
+ el('accessMessage').textContent=user
+   ? (premiumMember?'Login sebagai '+user.email+' · Premium aktif.':'Login sebagai '+user.email+' · Belum ada keanggotaan aktif, demo tetap tersedia.')
+   : 'Belum login? Demo gratis tetap bisa dimainkan.';
+ el('homeNote').textContent=premiumMember?'Premium aktif: 10 soal per sesi.':'Free demo: 5 soal per sesi. Login dengan akun berlangganan untuk memainkan versi lengkap.';
+}
+el('memberLogin').addEventListener('click',async()=>{
+ const email=el('memberEmail').value.trim(),password=el('memberPassword').value;
+ if(!email||!password){el('accessMessage').textContent='Masukkan email dan password akun Play & Learn.';return}
+ el('memberLogin').disabled=true;el('memberLogin').textContent='Memeriksa...';
+ const {data,error}=await sb.auth.signInWithPassword({email,password});
+ if(error){el('accessMessage').textContent='Login gagal: '+error.message}
+ else{await updateAccess(data.user)}
+ el('memberLogin').disabled=false;el('memberLogin').textContent='Login Premium';
+});
+el('memberLogout').addEventListener('click',async()=>{await sb.auth.signOut();await updateAccess(null)});
+sb.auth.getSession().then(async({data})=>{await updateAccess(data.session?.user||null)});
+sb.auth.onAuthStateChange((_event,session)=>{updateAccess(session?.user||null)});
+
+el('start').onclick=startGame;el('next').onclick=()=>{if(index<gameLimit-1){if(playerCount===2)turn=1-turn;index++;render()}else finish()};el('prev').onclick=()=>{if(index>0){index--;turn=answers[index]?.player??turn;render()}};
 el('homeBtn').onclick=()=>{clearTimer();show('home')};el('resultsHome').onclick=()=>show('home');el('playAgain').onclick=startGame;
 el('saveScore').onclick=()=>{if(saved)return;const name=el('playerName').value.trim()||'Player';const rows=board();if(playerCount===2){rows.push({name:playerNames[0],score:playerScores[0],level:names[levelKey],date:Date.now()},{name:playerNames[1],score:playerScores[1],level:names[levelKey],date:Date.now()});}else{rows.push({name,score,level:names[levelKey],date:Date.now()});}localStorage.setItem(boardKey,JSON.stringify(rows.sort((a,b)=>b.score-a.score).slice(0,50)));if(score>best())localStorage.setItem(bestKey,String(score));saved=true;el('saveScore').textContent='Saved ✓';el('saveScore').disabled=true};
 el('leaderboardBtn').onclick=()=>{renderBoard();show('leaderboard')};el('leaderBack').onclick=()=>show('home');el('howBtn').onclick=()=>show('how');el('howBack').onclick=()=>show('home');
